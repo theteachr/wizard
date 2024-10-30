@@ -1,0 +1,2 @@
+Hello, world! Welcome to the world of programming.
+Welcome to the world of Python, because the Rust world is too hard for me.
