@@ -26,7 +26,7 @@ impl std::fmt::Display for SpellError<'_> {
 }
 
 trait Wordifier {
-    fn wordify<'a, 'b>(&'a self, line: &'b str) -> impl Iterator<Item = &'b str>;
+    fn wordify<'a>(&self, line: &'a str) -> impl Iterator<Item = &'a str>;
 }
 
 struct Root<S: SpellChecker, W: Wordifier> {
