@@ -63,7 +63,7 @@ trait Wordifier {
 
 struct Root<S: SpellChecker, W: Wordifier> {
     spell_checker: S,
-    wordifer: W,
+    wordifier: W,
 }
 
 trait SpellChecker {
@@ -71,16 +71,16 @@ trait SpellChecker {
 }
 
 impl<S: SpellChecker, W: Wordifier> Root<S, W> {
-    fn new(spell_checker: S, wordifer: W) -> Self {
+    fn new(spell_checker: S, wordifier: W) -> Self {
         Self {
             spell_checker,
-            wordifer,
+            wordifier,
         }
     }
 
     fn spell_check_line<'a>(&self, line: String) -> Option<BadLine> {
         let bad_parts = self
-            .wordifer
+            .wordifier
             .wordify(&line)
             .scan(0, |acc, word| {
                 let start = *acc;
@@ -114,11 +114,11 @@ impl<S: SpellChecker, W: Wordifier> Root<S, W> {
 }
 
 struct BadSpellChecker;
-struct BadWordifer;
+struct BadWordifier;
 
-impl Wordifier for BadWordifer {
+impl Wordifier for BadWordifier {
     fn wordify<'a, 'b>(&'a self, line: &'b str) -> impl Iterator<Item = &'b str> {
-        line.split_whitespace()
+        line.split(|c: char| c.is_whitespace() || c.is_ascii_punctuation())
     }
 }
 
@@ -129,5 +129,5 @@ impl SpellChecker for BadSpellChecker {
 }
 
 fn main() {
-    Root::new(BadSpellChecker, BadWordifer).run()
+    Root::new(BadSpellChecker, BadWordifier).run()
 }
