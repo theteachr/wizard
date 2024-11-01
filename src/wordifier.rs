@@ -5,7 +5,7 @@ pub trait Wordifier {
 pub struct SimpleWordifier;
 
 impl Wordifier for SimpleWordifier {
-    fn wordify<'a, 'b>(&'a self, line: &'b str) -> impl Iterator<Item = &'b str> {
+    fn wordify<'a>(&self, line: &'a str) -> impl Iterator<Item = &'a str> {
         line.split(|c: char| c.is_whitespace() || c.is_ascii_punctuation())
     }
 }
