@@ -1,7 +1,7 @@
 use std::io::stdin;
 use std::ops::Not;
 
-use spell_checker::{BadSpellChecker, SpellChecker};
+use spell_checker::{BasicSpellChecker, SpellChecker};
 use spell_error::SpellError;
 use wordifier::{SimpleWordifier, Wordifier};
 
@@ -35,10 +35,18 @@ impl<S: SpellChecker, W: Wordifier> Root<S, W> {
     }
 }
 
-fn main() {
+fn main() -> std::io::Result<()> {
+    let dictionary_path = std::env::args()
+        .nth(1)
+        .unwrap_or("dictionaries/small.txt".to_owned());
+
+    let dictionary = BasicSpellChecker::from_file(dictionary_path)?;
+
     Root {
-        s: BadSpellChecker,
+        s: dictionary,
         w: SimpleWordifier,
     }
-    .run()
+    .run();
+
+    Ok(())
 }
