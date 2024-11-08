@@ -1,4 +1,4 @@
-use std::io::stdin;
+use std::io::{self, stdin};
 use std::ops::Not;
 
 use spell_checker::{BasicSpellChecker, SpellChecker};
@@ -15,18 +15,20 @@ struct Root<S: SpellChecker, W: Wordifier> {
 }
 
 impl<S: SpellChecker, W: Wordifier> Root<S, W> {
-    fn run(self) {
-        stdin()
-            .lines()
-            .enumerate()
-            .filter_map(|(ln, line)| line.ok().map(|line| (ln + 1, line)))
-            .for_each(|(ln, ref line)| {
-                self.w
-                    .wordify(&line)
-                    .filter_map(|word| self.s.spell_check(word).not().then_some(word))
-                    .into_iter()
-                    .for_each(|error| println!("{ln}:{}", SpellError::new(line, error)))
-            });
+    fn print_errors(&self, line_number: usize, line: String) {
+        self.w
+            .wordify(&line)
+            .filter_map(|word| self.s.spell_check(word).not().then_some(word))
+            .for_each(|error| println!("{line_number}:{}", SpellError::new(&line, error)))
+    }
+
+    fn run(self) -> io::Result<()> {
+        for (i, line) in stdin().lines().enumerate() {
+            let line = line?;
+            self.print_errors(i + 1, line);
+        }
+
+        Ok(())
     }
 }
 
@@ -41,7 +43,5 @@ fn main() -> std::io::Result<()> {
         s: dictionary,
         w: SimpleWordifier,
     }
-    .run();
-
-    Ok(())
+    .run()
 }

@@ -22,7 +22,7 @@ impl BasicSpellChecker {
         let f = File::open(path)?;
         let words = std::io::BufReader::new(f)
             .lines()
-            .filter_map(|line| line.ok())
+            .filter_map(Result::ok)
             .map(|line| line.trim().to_lowercase())
             .collect();
 
