@@ -24,8 +24,7 @@ impl<S: SpellChecker, W: Wordifier> Root<S, W> {
 
     fn run(self) -> io::Result<()> {
         for (i, line) in stdin().lines().enumerate() {
-            let line = line?;
-            self.print_errors(i + 1, line);
+            self.print_errors(i + 1, line?);
         }
 
         Ok(())
