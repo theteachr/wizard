@@ -1,5 +1,4 @@
 use std::io::{self, stdin};
-use std::ops::Not;
 
 use spell_checker::{BasicSpellChecker, SpellChecker};
 use spell_error::SpellError;
@@ -18,7 +17,7 @@ impl<S: SpellChecker, W: Wordifier> Root<S, W> {
     fn print_errors(&self, line_number: usize, line: String) {
         self.w
             .wordify(&line)
-            .filter_map(|word| self.s.spell_check(word).not().then_some(word))
+            .filter(|word| !self.s.spell_check(word))
             .for_each(|error| println!("{line_number}:{}", SpellError::new(&line, error)))
     }
 
