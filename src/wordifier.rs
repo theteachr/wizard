@@ -1,5 +1,5 @@
 pub trait Wordifier {
-    fn wordify<'a>(&self, line: &'a str) -> impl Iterator<Item = &'a str>;
+    fn words<'a>(&self, line: &'a str) -> impl Iterator<Item = &'a str>;
 }
 
 pub struct SimpleWordifier;
@@ -33,7 +33,7 @@ impl<'a> Iterator for SimpleWordifierIter<'a> {
 }
 
 impl Wordifier for SimpleWordifier {
-    fn wordify<'a>(&self, line: &'a str) -> impl Iterator<Item = &'a str> {
+    fn words<'a>(&self, line: &'a str) -> impl Iterator<Item = &'a str> {
         SimpleWordifierIter { line }
     }
 }

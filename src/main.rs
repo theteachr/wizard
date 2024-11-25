@@ -1,4 +1,5 @@
-use std::io::{self, stdin};
+use std::io::stdin;
+use std::ops::Not;
 
 use spell_checker::{BasicSpellChecker, SpellChecker};
 use spell_error::SpellError;
@@ -16,30 +17,32 @@ struct Wizard<S: SpellChecker, W: Wordifier> {
 impl<S: SpellChecker, W: Wordifier> Wizard<S, W> {
     fn print_errors(&self, line_number: usize, line: String) {
         self.w
-            .wordify(&line)
-            .filter(|word| !self.s.spell_check(word))
-            .for_each(|error| println!("{line_number}:{}", SpellError::new(&line, error)))
-    }
-
-    fn run(self) -> io::Result<()> {
-        for (i, line) in stdin().lines().enumerate() {
-            self.print_errors(i + 1, line?);
-        }
-
-        Ok(())
+            .words(&line)
+            .filter_map(|word| {
+                self.s
+                    .check(word)
+                    .not()
+                    .then_some(SpellError::new(&line, word))
+            })
+            .for_each(|error| println!("{line_number}:{error}"))
     }
 }
 
 fn main() -> std::io::Result<()> {
     let dictionary_path = std::env::args()
         .nth(1)
-        .unwrap_or("dictionaries/small.txt".to_owned());
+        .unwrap_or("dictionaries/small.txt".into());
 
     let dictionary = BasicSpellChecker::from_file(dictionary_path)?;
 
-    Wizard {
+    let wizard = Wizard {
         s: dictionary,
         w: SimpleWordifier,
+    };
+
+    for (i, line) in stdin().lines().enumerate() {
+        wizard.print_errors(i + 1, line?);
     }
-    .run()
+
+    Ok(())
 }
