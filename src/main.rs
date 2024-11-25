@@ -8,12 +8,12 @@ mod spell_checker;
 mod spell_error;
 mod wordifier;
 
-struct Root<S: SpellChecker, W: Wordifier> {
+struct Wizard<S: SpellChecker, W: Wordifier> {
     s: S,
     w: W,
 }
 
-impl<S: SpellChecker, W: Wordifier> Root<S, W> {
+impl<S: SpellChecker, W: Wordifier> Wizard<S, W> {
     fn print_errors(&self, line_number: usize, line: String) {
         self.w
             .wordify(&line)
@@ -37,7 +37,7 @@ fn main() -> std::io::Result<()> {
 
     let dictionary = BasicSpellChecker::from_file(dictionary_path)?;
 
-    Root {
+    Wizard {
         s: dictionary,
         w: SimpleWordifier,
     }
