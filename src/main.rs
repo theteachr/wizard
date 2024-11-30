@@ -1,5 +1,4 @@
 use std::io::stdin;
-use std::ops::Not;
 
 use spell_checker::{BasicSpellChecker, SpellChecker};
 use spell_error::SpellError;
@@ -10,21 +9,16 @@ mod spell_error;
 mod wordifier;
 
 struct Wizard<S: SpellChecker, W: Wordifier> {
-    s: S,
-    w: W,
+    spelling: S,
+    tokenizer: W,
 }
 
 impl<S: SpellChecker, W: Wordifier> Wizard<S, W> {
-    fn print_errors(&self, line_number: usize, line: String) {
-        self.w
+    fn print_errors(&self, line_number: usize, line: &str) {
+        self.tokenizer
             .words(&line)
-            .filter_map(|word| {
-                self.s
-                    .check(word)
-                    .not()
-                    .then_some(SpellError::new(&line, word))
-            })
-            .for_each(|error| println!("{line_number}:{error}"))
+            .filter(|word| !self.spelling.is_valid(word))
+            .for_each(|typo| println!("{line_number}:{}", SpellError::new(line, typo)))
     }
 }
 
@@ -36,12 +30,12 @@ fn main() -> std::io::Result<()> {
     let dictionary = BasicSpellChecker::from_file(dictionary_path)?;
 
     let wizard = Wizard {
-        s: dictionary,
-        w: SimpleWordifier,
+        spelling: dictionary,
+        tokenizer: SimpleWordifier,
     };
 
     for (i, line) in stdin().lines().enumerate() {
-        wizard.print_errors(i + 1, line?);
+        wizard.print_errors(i + 1, &line?);
     }
 
     Ok(())

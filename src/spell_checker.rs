@@ -4,13 +4,13 @@ use std::io::BufRead;
 use std::path::Path;
 
 pub trait SpellChecker {
-    fn check(&self, word: &str) -> bool;
+    fn is_valid(&self, word: &str) -> bool;
 }
 
 pub struct BadSpellChecker;
 
 impl SpellChecker for BadSpellChecker {
-    fn check(&self, word: &str) -> bool {
+    fn is_valid(&self, word: &str) -> bool {
         return word.to_lowercase() != "world";
     }
 }
@@ -31,7 +31,7 @@ impl BasicSpellChecker {
 }
 
 impl SpellChecker for BasicSpellChecker {
-    fn check(&self, word: &str) -> bool {
+    fn is_valid(&self, word: &str) -> bool {
         self.0.contains(&word.to_lowercase())
     }
 }
