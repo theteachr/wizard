@@ -1,24 +1,23 @@
 use std::io::stdin;
 
-use spell_checker::{BasicSpellChecker, SpellChecker};
-use spell_error::SpellError;
+use spell_checker::{BasicSpellChecker, LineMarker};
 use wordifier::{SimpleWordifier, Wordifier};
 
 mod spell_checker;
 mod spell_error;
 mod wordifier;
 
-struct Wizard<S: SpellChecker, W: Wordifier> {
+struct Wizard<S: LineMarker, W: Wordifier> {
     spelling: S,
     tokenizer: W,
 }
 
-impl<S: SpellChecker, W: Wordifier> Wizard<S, W> {
+impl<S: LineMarker, W: Wordifier> Wizard<S, W> {
     fn print_errors(&self, line_number: usize, line: &str) {
         self.tokenizer
             .words(&line)
-            .filter(|word| !self.spelling.is_valid(word))
-            .for_each(|typo| println!("{line_number}:{}", SpellError::new(line, typo)))
+            .filter_map(|word| self.spelling.mark(line, word))
+            .for_each(|marked_line| println!("{line_number}:{marked_line}"))
     }
 }
 
