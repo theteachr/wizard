@@ -4,7 +4,6 @@ use spell_checker::{BasicSpellChecker, LineMarker};
 use wordifier::{SimpleWordifier, Wordifier};
 
 mod spell_checker;
-mod spell_error;
 mod wordifier;
 
 struct Wizard<S: LineMarker, W: Wordifier> {
