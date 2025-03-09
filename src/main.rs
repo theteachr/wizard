@@ -21,11 +21,9 @@ impl<S: LineMarker, W: Wordifier> Wizard<S, W> {
 }
 
 fn main() -> std::io::Result<()> {
-    let dictionary_path = std::env::args()
-        .nth(1)
-        .unwrap_or("dictionaries/small.txt".into());
-
-    let dictionary = BasicSpellChecker::from_file(dictionary_path)?;
+    let path = std::env::args().nth(1);
+    let dictionary =
+        BasicSpellChecker::from_file(path.as_deref().unwrap_or("dictionaries/small.txt"))?;
 
     let wizard = Wizard {
         spelling: dictionary,
