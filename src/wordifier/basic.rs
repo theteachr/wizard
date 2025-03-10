@@ -15,12 +15,6 @@ impl<'a> Iterator for Iter<'a> {
             .map(|i| i + word_start)
             .unwrap_or(self.line.len());
 
-        // Couldn't do the following.
-        // ```
-        // let (word, self.line) = &self.line.split_at(word_end);
-        // ```
-        // Weird error reported: Found a 3 tuple where a 2 tuple was expected.
-
         let word = &self.line[word_start..word_end];
         self.line = &self.line[word_end..];
 
