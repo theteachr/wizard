@@ -17,7 +17,7 @@ impl<'a> Iterator for Iter<'a> {
 
         let word = &self.line[word_start..word_end];
 
-        self.line = &self.line[word_end + 1..];
+        self.line = &self.line[word_end..];
 
         Some(word)
     }
