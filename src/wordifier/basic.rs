@@ -16,7 +16,8 @@ impl<'a> Iterator for Iter<'a> {
             .unwrap_or(self.line.len());
 
         let word = &self.line[word_start..word_end];
-        self.line = &self.line[word_end..];
+
+        self.line = &self.line[word_end + 1..];
 
         Some(word)
     }
