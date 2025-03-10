@@ -1,14 +1,10 @@
-pub trait Wordifier {
-    fn words<'a>(&self, line: &'a str) -> impl Iterator<Item = &'a str>;
-}
+pub struct BasicWordifier;
 
-pub struct SimpleWordifier;
-
-struct SimpleWordifierIter<'a> {
+struct Iter<'a> {
     line: &'a str,
 }
 
-impl<'a> Iterator for SimpleWordifierIter<'a> {
+impl<'a> Iterator for Iter<'a> {
     type Item = &'a str;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -32,8 +28,8 @@ impl<'a> Iterator for SimpleWordifierIter<'a> {
     }
 }
 
-impl Wordifier for SimpleWordifier {
+impl super::Wordifier for BasicWordifier {
     fn words<'a>(&self, line: &'a str) -> impl Iterator<Item = &'a str> {
-        SimpleWordifierIter { line }
+        Iter { line }
     }
 }
