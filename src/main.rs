@@ -20,7 +20,7 @@ fn main() -> std::io::Result<()> {
     for (i, line) in stdin().lines().enumerate() {
         wizard
             .errors(line?.as_str())
-            .for_each(|error| println!("{n}:{error}", n = i + 1));
+            .for_each(|error| println!("{n}: {error}", n = i + 1));
     }
 
     Ok(())
