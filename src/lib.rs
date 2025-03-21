@@ -81,6 +81,14 @@ mod test {
             wordifier: CamelCaseWordifier,
         };
 
-        assert!(wizard.errors("aBird").next().is_none());
+        assert!(wizard.errors(r#"aBird = "bird""#).next().is_none());
+
+        assert_eq!(
+            wizard
+                .errors(r#"aBirb = "birb""#)
+                .map(|e| e.to_string())
+                .collect::<Vec<_>>(),
+            vec![r#"a~~Birb~~ = "birb""#, r#"aBirb = "~~birb~~""#]
+        );
     }
 }
