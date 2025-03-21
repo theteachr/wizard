@@ -11,3 +11,40 @@ impl super::Wordifier for BasicWordifier {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::wordifier::{BasicWordifier, Wordifier};
+
+    #[test]
+    fn it_works() {
+        assert_eq!(
+            BasicWordifier.words("this is good").collect::<Vec<_>>(),
+            vec!["this", "is", "good"]
+        )
+    }
+
+    #[test]
+    fn with_punctuation() {
+        assert_eq!(
+            BasicWordifier.words("Hello, world!").collect::<Vec<_>>(),
+            vec!["Hello", "world"]
+        )
+    }
+
+    #[test]
+    fn with_underscores() {
+        assert_eq!(
+            BasicWordifier.words("basic_wordifier").collect::<Vec<_>>(),
+            vec!["basic", "wordifier"]
+        )
+    }
+
+    #[test]
+    fn does_not_split_camel_case() {
+        assert_ne!(
+            BasicWordifier.words("basicWordifier").collect::<Vec<_>>(),
+            vec!["basic", "Wordifier"]
+        )
+    }
+}

@@ -1,3 +1,4 @@
+#[derive(PartialEq, Eq, Debug)]
 pub struct Error<'a> {
     line: &'a str,
     error: &'a str,

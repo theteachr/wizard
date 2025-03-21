@@ -12,3 +12,18 @@ impl Wordifier for CamelCaseWordifier {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::wordifier::{CamelCaseWordifier, Wordifier};
+
+    #[test]
+    fn it_works() {
+        assert_eq!(
+            CamelCaseWordifier
+                .words("basicWordifier")
+                .collect::<Vec<_>>(),
+            vec!["basic", "Wordifier"]
+        )
+    }
+}
