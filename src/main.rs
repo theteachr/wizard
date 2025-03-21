@@ -1,12 +1,8 @@
-mod core;
-mod error;
-
 use std::io::stdin;
 
 use wizard::dictionary::BasicDictionary;
 use wizard::wordifier::BasicWordifier;
-
-use core::Wizard;
+use wizard::Wizard;
 
 fn main() -> std::io::Result<()> {
     let arg = std::env::args().nth(1);

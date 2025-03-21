@@ -1,3 +1,4 @@
+#[derive(PartialEq, Eq, Debug)]
 pub struct Error<'a> {
     line: &'a str,
     error: &'a str,
@@ -6,6 +7,10 @@ pub struct Error<'a> {
 impl<'a> Error<'a> {
     pub(crate) fn new(line: &'a str, error: &'a str) -> Self {
         Self { line, error }
+    }
+
+    pub fn typo(&self) -> &str {
+        self.error
     }
 }
 

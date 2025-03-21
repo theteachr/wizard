@@ -1,5 +1,5 @@
-use wizard::dictionary::Dictionary;
-use wizard::wordifier::Wordifier;
+use crate::dictionary::Dictionary;
+use crate::wordifier::Wordifier;
 
 use crate::error::Error;
 
