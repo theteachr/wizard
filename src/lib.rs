@@ -10,7 +10,7 @@ mod test {
     use crate::{
         core::Wizard,
         dictionary::{BasicDictionary, Dictionary},
-        wordifier::BasicWordifier,
+        wordifier::{self, BasicWordifier, CamelCaseWordifier},
     };
 
     fn small_dictionary() -> BasicDictionary {
@@ -76,7 +76,10 @@ mod test {
 
     #[test]
     fn camel_cased_identifier() {
-        let wizard = basic_wizard();
+        let wizard = Wizard {
+            dictionary: small_dictionary(),
+            wordifier: CamelCaseWordifier,
+        };
 
         assert!(wizard.errors("aBird").next().is_none());
     }
