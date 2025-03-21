@@ -17,6 +17,16 @@ impl BasicDictionary {
 
         Ok(Self(words))
     }
+
+    pub fn learn(&mut self, word: &str) {
+        self.0.insert(word.to_lowercase());
+    }
+}
+
+impl Default for BasicDictionary {
+    fn default() -> Self {
+        Self(HashSet::new())
+    }
 }
 
 impl super::Dictionary for BasicDictionary {

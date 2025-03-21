@@ -7,6 +7,10 @@ impl<'a> Error<'a> {
     pub(crate) fn new(line: &'a str, error: &'a str) -> Self {
         Self { line, error }
     }
+
+    pub fn typo(&self) -> &str {
+        self.error
+    }
 }
 
 impl std::fmt::Display for Error<'_> {
