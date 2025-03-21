@@ -10,9 +10,9 @@ impl<'a> Iterator for Iter<'a> {
     fn next(&mut self) -> Option<Self::Item> {
         let word_start = self.line.find(self.word_begin)?;
 
-        let word_end = self.line[word_start..]
+        let word_end = self.line[word_start + 1..]
             .find(self.word_end)
-            .map(|i| i + word_start)
+            .map(|i| i + word_start + 1)
             .unwrap_or(self.line.len());
 
         let word = &self.line[word_start..word_end];
