@@ -10,7 +10,7 @@ mod test {
     use crate::{
         core::Wizard,
         dictionary::{BasicDictionary, Dictionary},
-        wordifier::{self, BasicWordifier, CamelCaseWordifier},
+        wordifier::{BasicWordifier, CamelCaseWordifier},
     };
 
     fn small_dictionary() -> BasicDictionary {
