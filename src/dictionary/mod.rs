@@ -1,7 +1,7 @@
-mod basic;
 mod dumb;
+mod set;
 
-pub use basic::BasicDictionary;
+pub use set::Set;
 
 pub trait Dictionary {
     fn contains(&self, word: &str) -> bool;

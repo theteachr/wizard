@@ -11,18 +11,18 @@ mod test {
 
     use crate::{
         core::Wizard,
-        dictionary::BasicDictionary,
-        wordifier::{BasicWordifier, CamelCaseWordifier},
+        dictionary::Set,
+        wordifier::{Alphabetic, CamelCase},
     };
 
-    fn small_dictionary() -> BasicDictionary {
-        BasicDictionary::new(["a", "an", "Bird"])
+    fn small_dictionary() -> Set {
+        Set::new(["a", "an", "Bird"])
     }
 
-    fn basic_wizard() -> Wizard<BasicDictionary, BasicWordifier> {
+    fn basic_wizard() -> Wizard<Set, Alphabetic> {
         Wizard {
             dictionary: small_dictionary(),
-            wordifier: BasicWordifier,
+            wordifier: Alphabetic,
         }
     }
 
@@ -49,7 +49,7 @@ mod test {
     fn camel_cased_identifier() {
         let wizard = Wizard {
             dictionary: small_dictionary(),
-            wordifier: CamelCaseWordifier,
+            wordifier: CamelCase,
         };
 
         assert!(wizard.errors(r#"aBird = "bird""#).next().is_none());

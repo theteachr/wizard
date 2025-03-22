@@ -3,9 +3,9 @@ use std::fs::File;
 use std::io::BufRead;
 use std::path::Path;
 
-pub struct BasicDictionary(HashSet<String>);
+pub struct Set(HashSet<String>);
 
-impl BasicDictionary {
+impl Set {
     pub fn new<T: IntoIterator<Item: AsRef<str>>>(words: T) -> Self {
         Self(
             words
@@ -28,13 +28,13 @@ impl BasicDictionary {
     }
 }
 
-impl Default for BasicDictionary {
+impl Default for Set {
     fn default() -> Self {
         Self(HashSet::new())
     }
 }
 
-impl super::Dictionary for BasicDictionary {
+impl super::Dictionary for Set {
     fn contains(&self, word: &str) -> bool {
         self.0.contains(&word.to_lowercase())
     }
@@ -44,10 +44,10 @@ impl super::Dictionary for BasicDictionary {
 mod tests {
     use crate::dictionary::Dictionary;
 
-    use super::BasicDictionary;
+    use super::Set;
 
-    fn small_dictionary() -> BasicDictionary {
-        BasicDictionary::new(["a", "an", "Bird"])
+    fn small_dictionary() -> Set {
+        Set::new(["a", "an", "Bird"])
     }
 
     #[test]

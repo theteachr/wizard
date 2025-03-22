@@ -1,9 +1,9 @@
 use super::iter::Iter;
 use super::Wordifier;
 
-pub struct CamelCaseWordifier;
+pub struct CamelCase;
 
-impl Wordifier for CamelCaseWordifier {
+impl Wordifier for CamelCase {
     fn words<'a>(&self, line: &'a str) -> impl Iterator<Item = &'a str> {
         Iter {
             line,
@@ -15,14 +15,12 @@ impl Wordifier for CamelCaseWordifier {
 
 #[cfg(test)]
 mod tests {
-    use crate::wordifier::{CamelCaseWordifier, Wordifier};
+    use crate::wordifier::{CamelCase, Wordifier};
 
     #[test]
     fn it_works() {
         assert_eq!(
-            CamelCaseWordifier
-                .words("basicWordifier")
-                .collect::<Vec<_>>(),
+            CamelCase.words("basicWordifier").collect::<Vec<_>>(),
             vec!["basic", "Wordifier"]
         )
     }

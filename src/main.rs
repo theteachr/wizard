@@ -1,7 +1,7 @@
 use std::io::stdin;
 
-use wizard::dictionary::BasicDictionary;
-use wizard::wordifier::BasicWordifier;
+use wizard::dictionary::Set;
+use wizard::wordifier::Alphabetic;
 use wizard::Wizard;
 
 fn main() -> std::io::Result<()> {
@@ -9,8 +9,8 @@ fn main() -> std::io::Result<()> {
     let path = arg.as_deref().unwrap_or("dictionaries/small.txt");
 
     let wizard = Wizard {
-        dictionary: BasicDictionary::from_file(path)?,
-        wordifier: BasicWordifier,
+        dictionary: Set::from_file(path)?,
+        wordifier: Alphabetic,
     };
 
     for (i, line) in stdin().lines().enumerate() {
