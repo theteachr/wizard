@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::BufRead;
 use std::path::Path;
 
-/// A hash set implementing the `Dictionary` trait.
+/// A lexicon implemented using a hash set.
 pub struct Set(HashSet<String>);
 
 impl Set {
@@ -35,7 +35,7 @@ impl Default for Set {
     }
 }
 
-impl super::Dictionary for Set {
+impl super::Lexicon for Set {
     fn contains(&self, word: &str) -> bool {
         self.0.contains(&word.to_lowercase())
     }
@@ -43,17 +43,17 @@ impl super::Dictionary for Set {
 
 #[cfg(test)]
 mod tests {
-    use crate::dictionary::Dictionary;
+    use crate::lexicon::Lexicon;
 
     use super::Set;
 
-    fn small_dictionary() -> Set {
+    fn lexicon() -> Set {
         Set::new(["a", "an", "Bird"])
     }
 
     #[test]
     fn learned_spell() {
-        let d = small_dictionary();
+        let d = lexicon();
 
         assert!(d.contains("a"));
         assert!(d.contains("an"));
@@ -62,12 +62,12 @@ mod tests {
 
     #[test]
     fn did_not_learn_misspelled() {
-        assert!(!small_dictionary().contains("birdy"));
+        assert!(!lexicon().contains("birdy"));
     }
 
     #[test]
     fn learned_spell_insensitively() {
-        let d = small_dictionary();
+        let d = lexicon();
 
         assert!(d.contains("A"));
         assert!(d.contains("aN"));

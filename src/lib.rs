@@ -1,6 +1,6 @@
 pub mod core;
-pub mod dictionary;
 pub mod error;
+pub mod lexicon;
 pub mod wordifier;
 
 pub use core::Wizard;
@@ -11,17 +11,17 @@ mod test {
 
     use crate::{
         core::Wizard,
-        dictionary::Set,
+        lexicon::Set,
         wordifier::{Alphabetic, CamelCase},
     };
 
-    fn small_dictionary() -> Set {
+    fn lexicon() -> Set {
         Set::new(["a", "an", "Bird"])
     }
 
     fn basic_wizard() -> Wizard<Set, Alphabetic> {
         Wizard {
-            dictionary: small_dictionary(),
+            lexicon: lexicon(),
             wordifier: Alphabetic,
         }
     }
@@ -48,7 +48,7 @@ mod test {
     #[test]
     fn camel_cased_identifier() {
         let wizard = Wizard {
-            dictionary: small_dictionary(),
+            lexicon: lexicon(),
             wordifier: CamelCase,
         };
 

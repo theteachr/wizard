@@ -1,18 +1,18 @@
-use crate::dictionary::Dictionary;
+use crate::lexicon::Lexicon;
 use crate::wordifier::Wordifier;
 
 use crate::error::Error;
 
-pub struct Wizard<D: Dictionary, W: Wordifier> {
-    pub dictionary: D,
+pub struct Wizard<L: Lexicon, W: Wordifier> {
+    pub lexicon: L,
     pub wordifier: W,
 }
 
-impl<S: Dictionary, W: Wordifier> Wizard<S, W> {
+impl<S: Lexicon, W: Wordifier> Wizard<S, W> {
     pub fn errors<'a>(&'a self, line: &'a str) -> impl Iterator<Item = Error<'a>> {
         self.wordifier
             .words(line)
-            .filter(|word| !self.dictionary.contains(word))
+            .filter(|word| !self.lexicon.contains(word))
             .map(|typo| Error::new(line, typo))
     }
 }
