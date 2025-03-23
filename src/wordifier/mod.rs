@@ -1,8 +1,8 @@
-mod basic;
+mod alphabetic;
 mod camel;
 mod iter;
 
-pub use basic::Alphabetic;
+pub use alphabetic::Alphabetic;
 pub use camel::CamelCase;
 
 pub trait Wordifier {

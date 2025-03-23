@@ -1,5 +1,16 @@
 use super::iter::Iter;
 
+/// Provides an iterator over sequence of alphabetic characters separated by
+/// non-alphabetic characters, except for the apostrophe.
+///
+/// # Usage
+///
+/// ```
+/// use wizard::wordifier::{Wordifier, Alphabetic};
+///
+/// let words = Alphabetic.words("Rust's Type System is very cool!").collect::<Vec<_>>();
+/// assert_eq!(words, vec!["Rust's", "Type", "System", "is", "very", "cool"]);
+/// ```
 pub struct Alphabetic;
 
 impl super::Wordifier for Alphabetic {
