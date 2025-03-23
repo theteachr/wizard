@@ -3,6 +3,7 @@ use std::fs::File;
 use std::io::BufRead;
 use std::path::Path;
 
+/// A hash set implementing the `Dictionary` trait.
 pub struct Set(HashSet<String>);
 
 impl Set {
