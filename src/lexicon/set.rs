@@ -4,6 +4,7 @@ use std::io::BufRead;
 use std::path::Path;
 
 /// A lexicon implemented using a hash set.
+#[derive(Default)]
 pub struct Set(HashSet<String>);
 
 impl Set {
@@ -26,12 +27,6 @@ impl Set {
             .collect();
 
         Ok(Self(words))
-    }
-}
-
-impl Default for Set {
-    fn default() -> Self {
-        Self(HashSet::new())
     }
 }
 
