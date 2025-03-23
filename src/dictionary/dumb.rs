@@ -1,3 +1,5 @@
+/// A dumb dictionary according to which "world" is the only incorrectly spelt
+/// word.
 pub struct Dumb;
 
 impl super::Dictionary for Dumb {
