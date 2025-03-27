@@ -22,7 +22,7 @@ impl Set {
 
         let words = std::io::BufReader::new(f)
             .lines()
-            .filter_map(Result::ok)
+            .map_while(Result::ok) // XXX: Return an error instead of using only part of the file?
             .map(|line| line.trim().to_lowercase())
             .collect();
 

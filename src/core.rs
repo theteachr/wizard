@@ -1,3 +1,5 @@
+use std::ops::Not;
+
 use crate::lexicon::Lexicon;
 use crate::wordifier::Wordifier;
 
@@ -12,7 +14,7 @@ impl<S: Lexicon, W: Wordifier> Wizard<S, W> {
     pub fn errors<'a>(&'a self, line: &'a str) -> impl Iterator<Item = Error<'a>> {
         self.wordifier
             .words(line)
-            .filter(|word| !self.lexicon.contains(word))
-            .map(|typo| Error::new(line, typo))
+            .filter(|word| self.lexicon.contains(word).not())
+            .map(|word| Error { line, word })
     }
 }

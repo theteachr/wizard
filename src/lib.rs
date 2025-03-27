@@ -11,6 +11,7 @@ mod test {
 
     use crate::{
         core::Wizard,
+        error::Error,
         lexicon::Set,
         wordifier::{Alphabetic, CamelCase},
     };
@@ -32,7 +33,7 @@ mod test {
 
         let errors = wizard
             .errors("a birdy")
-            .map(|e| e.typo().to_owned())
+            .map(|Error { word, .. }| word.to_owned())
             .collect::<Vec<_>>();
 
         assert_eq!(errors, vec!["birdy"]);
